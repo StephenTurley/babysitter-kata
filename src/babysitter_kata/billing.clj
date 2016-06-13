@@ -46,6 +46,12 @@
       ":00"
       (if (= 12 hour) (flip-period period) period))))
 
+(defn as-seq
+  [start end]
+  (if (not (before? start end))
+    nil
+    (lazy-seq (cons start (as-seq (inc-hour start) end)))))
+
 (defn calculate-price
   [start bed end]
   (if (valid? start end)

@@ -47,9 +47,15 @@
     (should= "AM" (underTest/flip-period "PM"))
     (should= "PM" (underTest/flip-period "AM"))))
 
-(describe as-seq
-          ;;convert start and end to seq of time
-          )
+(describe "as-seq"
+  (it "should return empty when start and end are equal"
+    (should= nil (underTest/as-seq "1:00PM" "1:00PM")))
+  (it "should return first one hour"
+    (should= '("1:00PM") (underTest/as-seq "1:00PM" "2:00PM")))
+  (it "should return two or more hours"
+    (should= '("1:00PM" "2:00PM") (underTest/as-seq "1:00PM" "3:00PM"))
+    (should= '("1:00PM" "2:00PM" "3:00PM") (underTest/as-seq "1:00PM" "4:00PM"))
+    (should= '("12:00PM" "1:00AM") (underTest/as-seq "12:00PM" "2:00AM"))))
 
 (describe "inc-hour"
   (it "should return the next hour"
