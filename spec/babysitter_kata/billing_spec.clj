@@ -12,7 +12,7 @@
   (context "billable time"
     (it "should charge $12 for one hour before bedtime"
         (should= 12 (underTest/calculate-price "5:00PM" "8:00PM" "6:00PM")))
-    (xit "should charge $24 for two hours before bedtime"
+    (it "should charge $24 for two hours before bedtime"
         (should= 24 (underTest/calculate-price "5:00PM" "8:00PM" "7:00PM")))))
 
 (describe "before?"

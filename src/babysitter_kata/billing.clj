@@ -55,4 +55,5 @@
 (defn calculate-price
   [start bed end]
   (if (valid? start end)
-    12 0))
+		(reduce + (map (fn [time] before-bed-time) (as-seq start end)))
+		0))
