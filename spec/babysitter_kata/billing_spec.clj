@@ -11,7 +11,9 @@
         (should= 0 (underTest/calculate-price "5:00PM" "8:00PM" "5:00AM"))))
   (context "billable time"
     (it "should charge $12 for one hour before bedtime"
-        (should= 12 (underTest/calculate-price "5:00PM" "8:00PM" "6:00PM")))))
+        (should= 12 (underTest/calculate-price "5:00PM" "8:00PM" "6:00PM")))
+    (xit "should charge $24 for two hours before bedtime"
+        (should= 24 (underTest/calculate-price "5:00PM" "8:00PM" "7:00PM")))))
 
 (describe "before?"
   (it "should return true when time is before"
@@ -39,5 +41,22 @@
   (it "should return true if the time contains PM"
     (should (underTest/evening? "4:00PM"))
     (should-not (underTest/evening? "4:00AM"))))
+
+(describe "flip-period"
+  (it "should flip the period"
+    (should= "AM" (underTest/flip-period "PM"))
+    (should= "PM" (underTest/flip-period "AM"))))
+
+(describe as-seq
+          ;;convert start and end to seq of time
+          )
+
+(describe "inc-hour"
+  (it "should return the next hour"
+    (should= "4:00PM" (underTest/inc-hour "3:00PM"))
+    (should= "2:00AM" (underTest/inc-hour "1:00AM")))
+  (it "should change the period"
+    (should= "1:00PM" (underTest/inc-hour "12:00AM"))
+    (should= "1:00AM" (underTest/inc-hour "12:00PM"))))
 
 (run-specs)
