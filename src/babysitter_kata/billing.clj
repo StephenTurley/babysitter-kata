@@ -7,16 +7,16 @@
 (def after-midnight 16)
 
 (defn to-hour
-  [time]
-  (Integer/parseInt (re-find #"^\d{1,2}" time)))
+	[time]
+	(Integer/parseInt (re-find #"^\d{1,2}" time)))
 
 (defn morning?
-  [time]
-  (boolean (re-find #"AM" time)))
+	[time]
+	(boolean (re-find #"AM" time)))
 
 (defn evening?
-  [time]
-  (not (morning? time)))
+	[time]
+	(not (morning? time)))
 
 (defn before?
 	[start end]
@@ -33,29 +33,29 @@
 				(> (to-hour start) (to-hour end)))))
 
 (defn valid?
-  [start end]
-  (and
+	[start end]
+	(and
 		(after? start too-early)
 		(before? end too-late)))
 
 (defn flip-period
-  [period]
-  (if (= "AM" period) "PM" "AM"))
+	[period]
+	(if (= "AM" period) "PM" "AM"))
 
 (defn inc-hour
-  [time]
-  (let [hour (to-hour time)
-        period (re-find #"AM|PM" time)]
-    (str
-      (if (= 12 hour) 1 (inc hour))
-      ":00"
-      (if (= 12 hour) (flip-period period) period))))
+	[time]
+	(let [hour (to-hour time)
+				period (re-find #"AM|PM" time)]
+		(str
+			(if (= 12 hour) 1 (inc hour))
+			":00"
+			(if (= 12 hour) (flip-period period) period))))
 
 (defn as-seq
-  [start end]
-  (if (not (before? start end))
-    nil
-    (lazy-seq (cons start (as-seq (inc-hour start) end)))))
+	[start end]
+	(if (not (before? start end))
+		nil
+		(lazy-seq (cons start (as-seq (inc-hour start) end)))))
 
 (defn determine-value
 	[time bed]
@@ -66,7 +66,7 @@
 		:else after-bed-time))
 
 (defn calculate-price
-  [start bed end]
-  (if (valid? start end)
-		(reduce + (map  #(determine-value % bed) (as-seq start end)))
+	[start bed end]
+	(if (valid? start end)
+		(reduce + (map #(determine-value % bed) (as-seq start end)))
 		0))
