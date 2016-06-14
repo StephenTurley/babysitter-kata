@@ -75,9 +75,18 @@
 		(before? time bed) before-bed-time
 		:else after-bed-time))
 
+(defn return-dollar-amt-for
+	[hours bed]
+	(map #(determine-value % bed) hours))
+
+(defn total
+	[list-of-amounts]
+	(reduce + list-of-amounts))
+
 (defn calculate-price
   "calculates total price of the day"
 	[start bed end]
 	(if (valid? start end)
-		(reduce + (map #(determine-value % bed) (as-seq start end)))
+		(let [every-hour (as-seq start end)]
+			(total (return-dollar-amt-for every-hour bed)))
 		0))
