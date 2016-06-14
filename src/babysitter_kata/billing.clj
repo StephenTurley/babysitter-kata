@@ -55,7 +55,8 @@
 	[start end]
 	(if (not (before? start end))
 		nil
-		(lazy-seq (cons start (as-seq (inc-hour start) end)))))
+		(lazy-seq
+			(cons start (as-seq (inc-hour start) end)))))
 
 (defn determine-value
 	[time bed]

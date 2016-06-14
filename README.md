@@ -1,6 +1,13 @@
 Babysitter Kata
+--------------
 
-`lein spec` to run the tests
+##### Run the tests
+`lein spec` 
+
+##### load in a repl
+`lein repl`
+`(load-file "src/babysitter_kata/billing.clj")`
+`(calculate-price <start-time> <bed-time> <end-time>)`
 
 Background
 ----------
