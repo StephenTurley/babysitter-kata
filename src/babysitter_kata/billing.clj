@@ -1,7 +1,7 @@
 (ns babysitter-kata.billing)
 
-(def earliest "5:00PM")
-(def latest "4:00AM")
+(def too-early "4:00PM")
+(def too-late "5:00AM")
 (def before-bed-time 12)
 (def after-bed-time 8)
 (def after-midnight 16)
@@ -19,19 +19,24 @@
   (not (morning? time)))
 
 (defn before?
-  [start end]
-  (or (and (evening? start) (morning? end))
-      (< (to-hour start) (to-hour end))))
+	[start end]
+	(if (= start end)
+		false
+		(or (and (evening? start) (morning? end))
+				(< (to-hour start) (to-hour end)))))
 
 (defn after?
-  [start end]
-  (not (before? start end)))
+	[start end]
+	(if (= start end)
+		false
+		(or (and (morning? start) (evening? end))
+				(> (to-hour start) (to-hour end)))))
 
 (defn valid?
   [start end]
   (and
-    (after? start earliest)
-    (before? end latest)))
+		(after? start too-early)
+		(before? end too-late)))
 
 (defn flip-period
   [period]
@@ -52,8 +57,16 @@
     nil
     (lazy-seq (cons start (as-seq (inc-hour start) end)))))
 
+(defn determine-value
+	[time bed]
+	(cond
+		(or (= time "12:00PM")
+				(after? time "11:00PM")) after-midnight
+		(before? time bed) before-bed-time
+		:else after-bed-time))
+
 (defn calculate-price
   [start bed end]
   (if (valid? start end)
-		(reduce + (map (fn [time] before-bed-time) (as-seq start end)))
+		(reduce + (map  #(determine-value % bed) (as-seq start end)))
 		0))
