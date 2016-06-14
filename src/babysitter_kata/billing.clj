@@ -75,7 +75,7 @@
 		(before? time bed) before-bed-time
 		:else after-bed-time))
 
-(defn return-dollar-amt-for
+(defn every-dollar-amt-for
 	[hours bed]
 	(map #(determine-value % bed) hours))
 
@@ -88,5 +88,5 @@
 	[start bed end]
 	(if (valid? start end)
 		(let [every-hour (as-seq start end)]
-			(total (return-dollar-amt-for every-hour bed)))
+			(total (every-dollar-amt-for every-hour bed)))
 		0))
