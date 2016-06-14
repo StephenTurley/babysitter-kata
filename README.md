@@ -5,9 +5,9 @@ Babysitter Kata
 `lein spec` 
 
 ##### load in a repl
-`lein repl`
-`(load-file "src/babysitter_kata/billing.clj")`
-`(calculate-price <start-time> <bed-time> <end-time>)`
+1. `lein repl`
+2. `(load-file "src/babysitter_kata/billing.clj")`
+3. `(calculate-price <start-time> <bed-time> <end-time>)`
 
 Background
 ----------
