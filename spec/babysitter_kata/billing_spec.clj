@@ -61,15 +61,15 @@
 	(it "should return two or more hours"
 		(should= '("1:00PM" "2:00PM") (underTest/as-seq "1:00PM" "3:00PM"))
 		(should= '("1:00PM" "2:00PM" "3:00PM") (underTest/as-seq "1:00PM" "4:00PM"))
-		(should= '("12:00PM" "1:00AM") (underTest/as-seq "12:00PM" "2:00AM"))))
+		(should= '("12:00AM" "1:00AM") (underTest/as-seq "12:00AM" "2:00AM"))))
 
 (describe "inc-hour"
 	(it "should return the next hour"
 		(should= "4:00PM" (underTest/inc-hour "3:00PM"))
 		(should= "2:00AM" (underTest/inc-hour "1:00AM")))
 	(it "should change the period"
-		(should= "1:00PM" (underTest/inc-hour "12:00AM"))
-		(should= "1:00AM" (underTest/inc-hour "12:00PM"))))
+		(should= "12:00PM" (underTest/inc-hour "11:00AM"))
+		(should= "12:00AM" (underTest/inc-hour "11:00PM"))))
 
 (describe "determine-value"
 	(it "should return 12 for before bedtime"
@@ -78,7 +78,7 @@
 		(should= 8 (underTest/determine-value "5:00PM" "4:00PM")))
 	(it "should return 16 for midnight and after"
 		(should= 16 (underTest/determine-value "2:00AM" "3:00AM"))
-		(should= 16 (underTest/determine-value "12:00PM" "7:00PM")))
+		(should= 16 (underTest/determine-value "12:00AM" "7:00PM")))
 	(it "should not return 16 for 11:00PM"
 		(should= 12 (underTest/determine-value "11:00PM" "2:00AM"))))
 
