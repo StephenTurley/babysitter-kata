@@ -4,7 +4,7 @@
 		[babysitter-kata.billing :as underTest]))
 
 (describe "calculate price"
-	(context "invalid time"
+	(context "non-billable time"
 		(it "should return zero when start time is too early"
 			(should= 0 (underTest/calculate-price "3:00PM" "8:00PM" "1:00AM")))
 		(it "should return zero when end time is too late"

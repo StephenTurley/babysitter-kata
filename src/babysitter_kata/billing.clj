@@ -36,7 +36,7 @@
     (and (morning? start) (evening? end)) true
     (> (to-hour start) (to-hour end)) true))
 
-(defn valid?
+(defn billable?
   "validates start and end times"
 	[start end]
 	(and
@@ -86,7 +86,7 @@
 (defn calculate-price
   "calculates total price of the day"
 	[start bed end]
-	(if (valid? start end)
+	(if (billable? start end)
 		(let [every-hour (as-seq start end)]
 			(total (every-dollar-amt-for every-hour bed)))
 		0))
